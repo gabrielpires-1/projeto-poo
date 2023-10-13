@@ -1,12 +1,15 @@
 package br.gov.cesarschool.poo.bonusvendas.negocio;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
+import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
+import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusDebito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
@@ -61,7 +64,7 @@ public class AcumuloResgateMediator {
     if (caixa != null) {
       caixa.creditar(valor);
       repositorioCaixaBonus.alterar(caixa);
-      LancamentoBonus lancamento = new LancamentoBonus(numCaixaDeBonus, valor, LocalDate.now());
+      LancamentoBonusCredito lancamento = new LancamentoBonusCredito(numCaixaDeBonus, valor, LocalDateTime.now());
       repositorioLancamento.incluir(lancamento);
       return null;
     } else {
@@ -79,7 +82,7 @@ public class AcumuloResgateMediator {
       if (caixa.getSaldo() >= valor) {
         caixa.debitar(valor);
         repositorioCaixaBonus.alterar(caixa);
-        LancamentoBonus lancamento = new LancamentoBonus(numeroCaixaDeBonus, -valor, LocalDate.now());
+        LancamentoBonusDebito lancamento = new LancamentoBonusDebito(tipoResgate, numeroCaixaDeBonus, valor, LocalDateTime.now());
         repositorioLancamento.incluir(lancamento);
         return null;
       } else {
