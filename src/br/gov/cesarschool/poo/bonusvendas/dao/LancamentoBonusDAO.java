@@ -53,6 +53,6 @@ public class LancamentoBonusDAO {
     }
 
     private String generateUniqueId(LancamentoBonus lancamento) {
-        return lancamento.getNumeroCaixaDeBonus() + "_" + lancamento.getDataHoraLancamento().toString();
+        return lancamento.getNumeroCaixaDeBonus() + "_" + lancamento.getDataHoraLancamento();
     }
 }
