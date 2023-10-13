@@ -9,6 +9,7 @@ public class CaixaDeBonus implements Serializable {
     private LocalDateTime dataHoraAtualizacao;
 
     public CaixaDeBonus(long numero) {
+        this.dataHoraAtualizacao = LocalDateTime.now();
         this.numero = numero;
     }
 
@@ -26,22 +27,27 @@ public class CaixaDeBonus implements Serializable {
     }
 
     public long getNumero() {
+        this.dataHoraAtualizacao = LocalDateTime.now();
         return this.numero;
     }
 
     public void setNumero(long numero) {
+        this.dataHoraAtualizacao = LocalDateTime.now();
         this.numero = numero;
     }
 
     public double getSaldo() {
+        this.dataHoraAtualizacao = LocalDateTime.now();
         return this.saldo;
     }
 
     public void setSaldo(double saldo) {
+        this.dataHoraAtualizacao = LocalDateTime.now();
         this.saldo = saldo;
     }
 
     public LocalDateTime getDataHoraAtualizacao() {
+        this.dataHoraAtualizacao = LocalDateTime.now();
         return this.dataHoraAtualizacao;
     }
 }

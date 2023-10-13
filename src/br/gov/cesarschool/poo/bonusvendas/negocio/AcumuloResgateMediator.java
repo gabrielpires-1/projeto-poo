@@ -35,6 +35,8 @@ public class AcumuloResgateMediator {
 
     cpf = cpf.replaceAll("[^0-9]", "");
 
+    cpf = cpf.substring(0, cpf.length() - 2);
+
     long cpfNumerico = Long.parseLong(cpf);
 
     String numCaixaDeBonusStr = String.valueOf(cpfNumerico) + dataAtual.format(formatter);

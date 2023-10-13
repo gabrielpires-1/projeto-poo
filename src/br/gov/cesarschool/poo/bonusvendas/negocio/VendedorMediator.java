@@ -25,13 +25,13 @@ public class VendedorMediator {
   }
 
   public ResultadoInclusaoVendedor validar(Vendedor vendedor) {
-    if (vendedor.getCpf() == null || vendedor.getCpf().isEmpty()) {
+    if (vendedor.getCpf() == null || vendedor.getCpf().trim().isEmpty()) {
       return new ResultadoInclusaoVendedor(0, "CPF nao informado");
     }
     if (ValidadorCPF.ehCpfValido(vendedor.getCpf()) == false) {
       return new ResultadoInclusaoVendedor(0, "CPF invalido");
     }
-    if (vendedor.getNomeCompleto() == null || vendedor.getNomeCompleto().isEmpty()) {
+    if (vendedor.getNomeCompleto() == null || vendedor.getNomeCompleto().trim().isEmpty()) {
       return new ResultadoInclusaoVendedor(0, "Nome completo nao informado");
     }
     if (vendedor.getSexo() == null) {
@@ -50,7 +50,7 @@ public class VendedorMediator {
     if (vendedor.getEndereco() == null) {
       return new ResultadoInclusaoVendedor(0, "Endereco nao informado");
     }
-    if (vendedor.getEndereco().getLogradouro() == null || vendedor.getEndereco().getLogradouro().isEmpty()) {
+    if (vendedor.getEndereco().getLogradouro() == null || vendedor.getEndereco().getLogradouro().trim().isEmpty()) {
       return new ResultadoInclusaoVendedor(0, "Logradouro nao informado");
     }
     if (vendedor.getEndereco().getLogradouro().length() < 4) {
@@ -59,13 +59,13 @@ public class VendedorMediator {
     if (vendedor.getEndereco().getNumero() < 0) {
       return new ResultadoInclusaoVendedor(0, "Numero menor que zero");
     }
-    if (vendedor.getEndereco().getCidade() == null) {
+    if (vendedor.getEndereco().getCidade() == null || vendedor.getEndereco().getCidade().trim().isEmpty()) {
       return new ResultadoInclusaoVendedor(0, "Cidade nao informada");
     }
-    if (vendedor.getEndereco().getEstado().isEmpty()) {
+    if (vendedor.getEndereco().getEstado() == null || vendedor.getEndereco().getEstado().trim().isEmpty()) {
       return new ResultadoInclusaoVendedor(0, "Estado nao informado");
     }
-    if (vendedor.getEndereco().getPais().isEmpty()) {
+    if (vendedor.getEndereco().getPais() == null || vendedor.getEndereco().getPais().trim().isEmpty()) {
       return new ResultadoInclusaoVendedor(0, "Pais nao informado");
     }
     return new ResultadoInclusaoVendedor(0, null);
@@ -81,6 +81,7 @@ public class VendedorMediator {
     if (incluir == false) {
       return new ResultadoInclusaoVendedor(0, "Vendedor ja existente");
     }
+    
     long numeroCaixaDeBonus = caixaDeBonusMediator.gerarCaixaDeBonus(vendedor);
     if (numeroCaixaDeBonus == 0) {
       return new ResultadoInclusaoVendedor(0, "Caixa de bonus nao foi gerada");

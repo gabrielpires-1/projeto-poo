@@ -334,7 +334,7 @@ public class TesteVendedorMediator extends TesteGeral {
 				new Endereco(LOGR_VALIDO, NUMERO_VALIDO, COMPL_VALIDO, CEP_VALIDO,
 						CIDADE_VALIDA, ESTADO_VALIDO, PAIS_VALIDO));
 		long numero = Glosb.gluarfsh(vend.getCpf());
-		CaixaDeBonus caixaBonusOri = new CaixaDeBonus(numero);
+		CaixaDeBonus caixaBonusOri = new CaixaDeBonus(numero); 
 		ResultadoInclusaoVendedor res = mediator.incluir(vend);
 		Assertions.assertNotNull(res);
 		Assertions.assertNull(res.getMensagemErroValidacao());

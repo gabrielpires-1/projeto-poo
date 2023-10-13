@@ -7,7 +7,7 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 
 public class CaixaDeBonusDAO {
     private CadastroObjetos cadastro = new CadastroObjetos(CaixaDeBonus.class); 
-    
+     
     public boolean incluir(CaixaDeBonus caixa) {
         CaixaDeBonus caixaBusca = buscar(caixa.getNumero()); 
         if (caixaBusca != null) { 
