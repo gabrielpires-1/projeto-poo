@@ -1,32 +1,80 @@
 package br.gov.cesarschool.poo.bonusvendas.telas;
 
-import javax.swing.*;
+import java.awt.EventQueue;
 import javax.swing.text.MaskFormatter;
 
-import java.awt.*;
-import java.text.ParseException;
+import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Sexo;
+import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
+import br.gov.cesarschool.poo.bonusvendas.negocio.VendedorMediator;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.text.AttributeSet;
 
 public class TelaManutencaoVendedor {
+    
 
     private JFrame frame;
-    private JTextField txtCPF;
-    private JTextField txtNomeCompleto;
-    private JTextField txtDataNascimento;
-    private JTextField txtRenda;
-    private JTextField txtLogradouro;
-    private JTextField txtNumero;
-    private JTextField txtComplemento;
-    private JTextField txtCEP;
-    private JTextField txtCidade;
+    private JTextField textFieldNome;
+    private JRadioButton radioButtonMasculino;
+    private JRadioButton radioButtonFeminino;
+    private JTextField textFieldRenda;
+    private JTextField textFieldLogradouro;
+    private JTextField textFieldNumero;
+    private JTextField textFieldComplemento;
+    private JTextField textFieldCidade;
     private JComboBox<String> comboEstado;
+    private JFormattedTextField cpfFormattedField;  // Declare aqui
+    private JFormattedTextField dataNascimentoFormattedField;  // Declare aqui
+    private JFormattedTextField cepFormattedField;  // Declare aqui
+    private JLabel lblNewLabel;
+    private JLabel lblNewLabel_1;
+    private JLabel lblNewLabel_2;
+    private JLabel lblNewLabel_3;
+    private JLabel lblNewLabel_4;
+    private JLabel lblNewLabel_5;
+    private JLabel lblNewLabel_6;
+    private JLabel lblNewLabel_7;
+    private JLabel lblNewLabel_8;
+    private JLabel lblNewLabel_9;
+    private JLabel lblNewLabel_10;
+    private MaskFormatter createFormatter(String format) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(format);
+            formatter.setPlaceholderCharacter('0');
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        return formatter;
+    }
+
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                TelaManutencaoVendedor window = new TelaManutencaoVendedor();
-                window.frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    TelaManutencaoVendedor window = new  TelaManutencaoVendedor();
+                    window.frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -35,162 +83,217 @@ public class TelaManutencaoVendedor {
         initialize();
     }
 
-  private void initialize() {
-    frame = new JFrame();
-    frame.setBounds(100, 100, 600, 500);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.getContentPane().setLayout(null);
+    private void initialize() {
+        frame = new JFrame("Manutenção de Vendedor");
+        frame.setBounds(100, 100, 450, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(null);
+        
+        cpfFormattedField = new JFormattedTextField(createFormatter("###.###.###-##"));
+        cpfFormattedField.setBounds(150, 10, 200, 20);
+        frame.getContentPane().add(cpfFormattedField);
 
-    try {
-      JLabel lblCPF = new JLabel("CPF:");
-      lblCPF.setBounds(50, 30, 150, 25);
-      frame.getContentPane().add(lblCPF);
+// Adicione um DocumentFilter para limitar o campo CPF a números
+        ((AbstractDocument) cpfFormattedField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                // Permite apenas números
+                String newValue = text.replaceAll("[^0-9]", "");
+                super.replace(fb, offset, length, newValue, attrs);
+            }
+        });
 
-      MaskFormatter cpfMask = new MaskFormatter("###.###.###-##");
-      JFormattedTextField txtCPFFormatted = new JFormattedTextField(cpfMask);
-      txtCPFFormatted.setBounds(210, 30, 250, 25);
-      frame.getContentPane().add(txtCPFFormatted);
 
-      JLabel lblDataNascimento = new JLabel("Data de nascimento:");
-      lblDataNascimento.setBounds(50, 70, 150, 25);
-      frame.getContentPane().add(lblDataNascimento);
 
-      MaskFormatter dateMask = new MaskFormatter("##/##/####");
-      JFormattedTextField txtDataNascimentoFormatted = new JFormattedTextField(dateMask);
-      txtDataNascimentoFormatted.setBounds(210, 70, 250, 25);
-      frame.getContentPane().add(txtDataNascimentoFormatted);
+        textFieldNome = new JTextField();
+        textFieldNome.setBounds(150, 40, 200, 20);
+        frame.getContentPane().add(textFieldNome);
 
-      JLabel lblCEP = new JLabel("CEP:");
-      lblCEP.setBounds(50, 110, 150, 25);
-      frame.getContentPane().add(lblCEP);
+        ButtonGroup genderButtonGroup = new ButtonGroup();
 
-      MaskFormatter cepMask = new MaskFormatter("#####-###");
-      JFormattedTextField txtCEPFormatted = new JFormattedTextField(cepMask);
-      txtCEPFormatted.setBounds(210, 110, 250, 25);
-      frame.getContentPane().add(txtCEPFormatted);
+        radioButtonMasculino = new JRadioButton("Masculino");
+        radioButtonMasculino.setBounds(150, 70, 100, 20);
+        frame.getContentPane().add(radioButtonMasculino);
+        genderButtonGroup.add(radioButtonMasculino);
 
-      JLabel lblNomeCompleto = new JLabel("Nome completo:");
-      lblNomeCompleto.setBounds(50, 90, 150, 25);
-      frame.getContentPane().add(lblNomeCompleto);
+        radioButtonFeminino = new JRadioButton("Feminino");
+        radioButtonFeminino.setBounds(250, 70, 100, 20);
+        frame.getContentPane().add(radioButtonFeminino);
+        genderButtonGroup.add(radioButtonFeminino);
+        
+       
+        dataNascimentoFormattedField = new JFormattedTextField(createFormatter("##/##/####"));
+        dataNascimentoFormattedField.setBounds(150, 100, 200, 20);
+        frame.getContentPane().add(dataNascimentoFormattedField);
+        
+        // Adicione um DocumentFilter para limitar o campo Data de Nascimento a números
+        ((AbstractDocument) dataNascimentoFormattedField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                // Permite apenas números
+                String newValue = text.replaceAll("[^0-9]", "");
+                super.replace(fb, offset, length, newValue, attrs);
+            }
+        });
 
-      txtNomeCompleto = new JTextField();
-      txtNomeCompleto.setBounds(210, 90, 250, 25);
-      frame.getContentPane().add(txtNomeCompleto);
+        textFieldRenda = new JTextField();
+        textFieldRenda.setBounds(150, 130, 200, 20);
+        frame.getContentPane().add(textFieldRenda);
+        // Defina a máscara para o campo Renda aqui
+        ((AbstractDocument) textFieldRenda.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                // Permite apenas números
+                String newValue = text.replaceAll("[^0-9]", "");
+                super.replace(fb, offset, length, newValue, attrs);
+            }
+        });
 
-      JRadioButton rdbtnMasculino = new JRadioButton("Masculino");
-      rdbtnMasculino.setBounds(210, 130, 100, 25);
-      frame.getContentPane().add(rdbtnMasculino);
+        textFieldLogradouro = new JTextField();
+        textFieldLogradouro.setBounds(150, 160, 200, 20);
+        frame.getContentPane().add(textFieldLogradouro);
 
-      JRadioButton rdbtnFeminino = new JRadioButton("Feminino");
-      rdbtnFeminino.setBounds(320, 130, 100, 25);
-      frame.getContentPane().add(rdbtnFeminino);
+        textFieldNumero = new JTextField();
+        textFieldNumero.setBounds(150, 190, 200, 20);
+        frame.getContentPane().add(textFieldNumero);
+        ((AbstractDocument) textFieldNumero.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                // Permite apenas números
+                String newValue = text.replaceAll("[^0-9]", "");
+                super.replace(fb, offset, length, newValue, attrs);
+            }
+        });
 
-      // Agrupar botões de rádio para que somente um possa ser selecionado
-      ButtonGroup grupoSexo = new ButtonGroup();
-      grupoSexo.add(rdbtnMasculino);
-      grupoSexo.add(rdbtnFeminino);
+        textFieldComplemento = new JTextField();
+        textFieldComplemento.setBounds(150, 220, 200, 20);
+        frame.getContentPane().add(textFieldComplemento);
 
-      // ... (Continue com outros campos de acordo com a descrição fornecida)
+        cepFormattedField = new JFormattedTextField(createFormatter("#####-###"));
+        cepFormattedField.setBounds(150, 250, 200, 20);
+        frame.getContentPane().add(cepFormattedField);
+        
+        // Adicione um DocumentFilter para limitar o campo CEP a números
+        ((AbstractDocument) cepFormattedField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                // Permite apenas números
+                String newValue = text.replaceAll("[^0-9]", "");
+                super.replace(fb, offset, length, newValue, attrs);
+            }
+        });
 
-      JLabel lblEstado = new JLabel("Estado:");
-      lblEstado.setBounds(50, 390, 150, 25);
-      frame.getContentPane().add(lblEstado);
+        textFieldCidade = new JTextField();
+        textFieldCidade.setBounds(150, 280, 200, 20);
+        frame.getContentPane().add(textFieldCidade);
 
-      comboEstado = new JComboBox<>(new String[]{
-              "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
-              "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
-              "RO", "RS", "SC", "SP", "SE", "TO"
+        comboEstado = new JComboBox<String>();
+        comboEstado.setBounds(150, 310, 200, 20);
+        // Adicione os estados brasileiros à lista do combo box
+        String[] estados = {
+            "Selecionar",
+            "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará",
+            "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso",
+            "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná",
+            "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte",
+            "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina",
+            "São Paulo", "Sergipe", "Tocantins"
+        };
+        comboEstado.setModel(new DefaultComboBoxModel<String>(estados));
+        frame.getContentPane().add(comboEstado);
+
+        lblNewLabel = new JLabel("CPF");
+        lblNewLabel.setBounds(6, 12, 61, 16);
+        frame.getContentPane().add(lblNewLabel);
+        
+        lblNewLabel_1 = new JLabel("NOME COMPLETO");
+        lblNewLabel_1.setBounds(6, 42, 117, 16);
+        frame.getContentPane().add(lblNewLabel_1);
+        
+        lblNewLabel_2 = new JLabel("SEXO");
+        lblNewLabel_2.setBounds(6, 72, 61, 16);
+        frame.getContentPane().add(lblNewLabel_2);
+        
+        lblNewLabel_3 = new JLabel("DATA NASCIMENTO");
+        lblNewLabel_3.setBounds(6, 102, 132, 16);
+        frame.getContentPane().add(lblNewLabel_3);
+        
+        lblNewLabel_4 = new JLabel("RENDA");
+        lblNewLabel_4.setBounds(6, 132, 132, 16);
+        frame.getContentPane().add(lblNewLabel_4);
+        
+        lblNewLabel_5 = new JLabel("LOGRADOURO");
+        lblNewLabel_5.setBounds(6, 162, 132, 16);
+        frame.getContentPane().add(lblNewLabel_5);
+        
+        lblNewLabel_6 = new JLabel("NÚMERO");
+        lblNewLabel_6.setBounds(6, 192, 132, 16);
+        frame.getContentPane().add(lblNewLabel_6);
+        
+        lblNewLabel_7 = new JLabel("COMPLEMENTO");
+        lblNewLabel_7.setBounds(6, 222, 132, 16);
+        frame.getContentPane().add(lblNewLabel_7);
+        
+        lblNewLabel_8 = new JLabel("CEP");
+        lblNewLabel_8.setBounds(6, 252, 61, 16);
+        frame.getContentPane().add(lblNewLabel_8);
+        
+        lblNewLabel_9 = new JLabel("CIDADE");
+        lblNewLabel_9.setBounds(6, 282, 61, 16);
+        frame.getContentPane().add(lblNewLabel_9);
+        
+        lblNewLabel_10 = new JLabel("ESTADO");
+        lblNewLabel_10.setBounds(6, 311, 61, 16);
+        frame.getContentPane().add(lblNewLabel_10);
+        
+       JButton btnCadastrarVendedor = new JButton("Cadastrar Vendedor");
+        btnCadastrarVendedor.setBounds(150, 350, 200, 30);
+        frame.getContentPane().add(btnCadastrarVendedor);
+
+        // Adicione um ActionListener para o botão "Cadastrar Vendedor"
+        btnCadastrarVendedor.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              cadastrarVendedor();
+          }
       });
-      comboEstado.setBounds(210, 390, 60, 25);
-      frame.getContentPane().add(comboEstado);
-      
-      // JLabel lblDataNascimento = new JLabel("Data de nascimento:");
-      // lblDataNascimento.setBounds(50, 170, 150, 25);
-      // frame.getContentPane().add(lblDataNascimento);
-
-      // txtDataNascimento = new JTextField();
-      // txtDataNascimento.setBounds(210, 170, 250, 25);
-      // frame.getContentPane().add(txtDataNascimento);
-
-      JLabel lblRenda = new JLabel("Renda:");
-      lblRenda.setBounds(50, 210, 150, 25);
-      frame.getContentPane().add(lblRenda);
-
-      txtRenda = new JTextField();
-      txtRenda.setBounds(210, 210, 250, 25);
-      frame.getContentPane().add(txtRenda);
-
-      JLabel lblLogradouro = new JLabel("Logradouro:");
-      lblLogradouro.setBounds(50, 250, 150, 25);
-      frame.getContentPane().add(lblLogradouro);
-
-      txtLogradouro = new JTextField();
-      txtLogradouro.setBounds(210, 250, 250, 25);
-      frame.getContentPane().add(txtLogradouro);
-
-      JLabel lblNumero = new JLabel("Número:");
-      lblNumero.setBounds(50, 290, 150, 25);
-      frame.getContentPane().add(lblNumero);
-
-      txtNumero = new JTextField();
-      txtNumero.setBounds(210, 290, 250, 25);
-      frame.getContentPane().add(txtNumero);
-
-      JLabel lblComplemento = new JLabel("Complemento:");
-      lblComplemento.setBounds(50, 330, 150, 25);
-      frame.getContentPane().add(lblComplemento);
-
-      txtComplemento = new JTextField();
-      txtComplemento.setBounds(210, 330, 250, 25);
-      frame.getContentPane().add(txtComplemento);
-
-      // JLabel lblCEP = new JLabel("CEP:");
-      // lblCEP.setBounds(50, 370, 150, 25);
-      // frame.getContentPane().add(lblCEP);
-
-      // txtCEP = new JTextField();
-      // txtCEP.setBounds(210, 370, 250, 25);
-      // frame.getContentPane().add(txtCEP);
-
-      JLabel lblCidade = new JLabel("Cidade:");
-      lblCidade.setBounds(50, 410, 150, 25);
-      frame.getContentPane().add(lblCidade);
-
-      txtCidade = new JTextField();
-      txtCidade.setBounds(210, 410, 250, 25);
-      frame.getContentPane().add(txtCidade);
-
-      JButton btnSalvar = new JButton("Salvar");
-      btnSalvar.setBounds(210, 450, 100, 30);
-      btnSalvar.addActionListener(e -> salvarDados());
-      frame.getContentPane().add(btnSalvar);
-
-      JButton btnLimpar = new JButton("Limpar");
-      btnLimpar.setBounds(320, 450, 100, 30);
-      btnLimpar.addActionListener(e -> limparCampos());
-      frame.getContentPane().add(btnLimpar);
-      
-    } catch (ParseException e) {
-        e.printStackTrace();
     }
-  }
 
-  private void salvarDados() {
-    // Aqui você pode incluir a lógica para salvar os dados inseridos, como, por exemplo, 
-    // validação dos dados e salvamento em banco de dados.
-    JOptionPane.showMessageDialog(frame, "Dados salvos com sucesso!");
-  }
-  
-  private void limparCampos() {
-      txtCPF.setText("");
-      txtNomeCompleto.setText("");
-      txtDataNascimento.setText("");
-      txtRenda.setText("");
-      txtLogradouro.setText("");
-      txtNumero.setText("");
-      txtComplemento.setText("");
-      txtCEP.setText("");
-      txtCidade.setText("");
-      comboEstado.setSelectedIndex(0);
-  }
-}
+    private void cadastrarVendedor() {
+        // Obtém os valores dos campos da interface gráfica
+        String cpf = cpfFormattedField.getText().replaceAll("[.-]", "");
+
+        String nome = textFieldNome.getText();
+        String sexo = radioButtonMasculino.isSelected() ? "Masculino" : "Feminino";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataNascimento = LocalDate.parse(dataNascimentoFormattedField.getText(), formatter);
+        double renda = Double.parseDouble(textFieldRenda.getText());
+        String logradouro = textFieldLogradouro.getText();
+        int numero = Integer.parseInt(textFieldNumero.getText());
+        String complemento = textFieldComplemento.getText();
+        String cep = cepFormattedField.getText();
+        String cidade = textFieldCidade.getText();
+        String estado = (String) comboEstado.getSelectedItem();
+
+        // Crie uma instância de Vendedor com os valores obtidos
+        Endereco endereco = new Endereco(logradouro, numero, complemento, cep, cidade, estado, "Brasil");
+        // Vendedor vendedor = new Vendedor(cpf, nome, Sexo.FEMININO, dataNascimento, renda, endereco);
+        Vendedor vendedor = new Vendedor(cpf, nome, Sexo.FEMININO, dataNascimento, renda, endereco);
+
+        vendedor.setCpf(cpf);
+        vendedor.setNomeCompleto(nome);
+        vendedor.setSexo(Sexo.FEMININO);
+        // Configure os outros atributos do vendedor com os valores obtidos
+
+        // Chame o método do VendedorMediator para cadastrar o vendedor
+        VendedorMediator mediator = VendedorMediator.getInstancia();
+        ResultadoInclusaoVendedor resultado = mediator.incluir(vendedor);
+
+        // Verifique o resultado e forneça feedback ao usuário
+        if (resultado.getMensagemErroValidacao() != null) {
+            JOptionPane.showMessageDialog(frame, resultado.getMensagemErroValidacao(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Vendedor cadastrado com sucesso. Número do Caixa de Bônus: " + resultado.getNumeroCaixaDeBonus(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+} 
