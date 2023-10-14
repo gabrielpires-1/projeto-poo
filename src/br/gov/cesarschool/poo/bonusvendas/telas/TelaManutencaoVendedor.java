@@ -35,139 +35,145 @@ public class TelaManutencaoVendedor {
         initialize();
     }
 
-    private void initialize() {
-        frame = new JFrame();
-        frame.setBounds(100, 100, 600, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+  private void initialize() {
+    frame = new JFrame();
+    frame.setBounds(100, 100, 600, 500);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.getContentPane().setLayout(null);
 
-        JLabel lblCPF = new JLabel("CPF:");
-        lblCPF.setBounds(50, 50, 150, 25);
-        frame.getContentPane().add(lblCPF);
+    try {
+      JLabel lblCPF = new JLabel("CPF:");
+      lblCPF.setBounds(50, 30, 150, 25);
+      frame.getContentPane().add(lblCPF);
 
-        txtCPF = new JTextField();
-        txtCPF.setBounds(210, 50, 250, 25);
-        frame.getContentPane().add(txtCPF);
+      MaskFormatter cpfMask = new MaskFormatter("###.###.###-##");
+      JFormattedTextField txtCPFFormatted = new JFormattedTextField(cpfMask);
+      txtCPFFormatted.setBounds(210, 30, 250, 25);
+      frame.getContentPane().add(txtCPFFormatted);
 
-        JLabel lblNomeCompleto = new JLabel("Nome completo:");
-        lblNomeCompleto.setBounds(50, 90, 150, 25);
-        frame.getContentPane().add(lblNomeCompleto);
+      JLabel lblDataNascimento = new JLabel("Data de nascimento:");
+      lblDataNascimento.setBounds(50, 70, 150, 25);
+      frame.getContentPane().add(lblDataNascimento);
 
-        txtNomeCompleto = new JTextField();
-        txtNomeCompleto.setBounds(210, 90, 250, 25);
-        frame.getContentPane().add(txtNomeCompleto);
+      MaskFormatter dateMask = new MaskFormatter("##/##/####");
+      JFormattedTextField txtDataNascimentoFormatted = new JFormattedTextField(dateMask);
+      txtDataNascimentoFormatted.setBounds(210, 70, 250, 25);
+      frame.getContentPane().add(txtDataNascimentoFormatted);
 
-        JRadioButton rdbtnMasculino = new JRadioButton("Masculino");
-        rdbtnMasculino.setBounds(210, 130, 100, 25);
-        frame.getContentPane().add(rdbtnMasculino);
+      JLabel lblCEP = new JLabel("CEP:");
+      lblCEP.setBounds(50, 110, 150, 25);
+      frame.getContentPane().add(lblCEP);
 
-        JRadioButton rdbtnFeminino = new JRadioButton("Feminino");
-        rdbtnFeminino.setBounds(320, 130, 100, 25);
-        frame.getContentPane().add(rdbtnFeminino);
+      MaskFormatter cepMask = new MaskFormatter("#####-###");
+      JFormattedTextField txtCEPFormatted = new JFormattedTextField(cepMask);
+      txtCEPFormatted.setBounds(210, 110, 250, 25);
+      frame.getContentPane().add(txtCEPFormatted);
 
-        // Agrupar botões de rádio para que somente um possa ser selecionado
-        ButtonGroup grupoSexo = new ButtonGroup();
-        grupoSexo.add(rdbtnMasculino);
-        grupoSexo.add(rdbtnFeminino);
+      JLabel lblNomeCompleto = new JLabel("Nome completo:");
+      lblNomeCompleto.setBounds(50, 90, 150, 25);
+      frame.getContentPane().add(lblNomeCompleto);
 
-        // ... (Continue com outros campos de acordo com a descrição fornecida)
+      txtNomeCompleto = new JTextField();
+      txtNomeCompleto.setBounds(210, 90, 250, 25);
+      frame.getContentPane().add(txtNomeCompleto);
 
-        JLabel lblEstado = new JLabel("Estado:");
-        lblEstado.setBounds(50, 390, 150, 25);
-        frame.getContentPane().add(lblEstado);
+      JRadioButton rdbtnMasculino = new JRadioButton("Masculino");
+      rdbtnMasculino.setBounds(210, 130, 100, 25);
+      frame.getContentPane().add(rdbtnMasculino);
 
-        comboEstado = new JComboBox<>(new String[]{
-                "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
-                "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
-                "RO", "RS", "SC", "SP", "SE", "TO"
-        });
-        comboEstado.setBounds(210, 390, 60, 25);
-        frame.getContentPane().add(comboEstado);
-        JLabel lblDataNascimento = new JLabel("Data de nascimento:");
-        lblDataNascimento.setBounds(50, 170, 150, 25);
-        frame.getContentPane().add(lblDataNascimento);
+      JRadioButton rdbtnFeminino = new JRadioButton("Feminino");
+      rdbtnFeminino.setBounds(320, 130, 100, 25);
+      frame.getContentPane().add(rdbtnFeminino);
 
-        txtDataNascimento = new JTextField();
-        txtDataNascimento.setBounds(210, 170, 250, 25);
-        frame.getContentPane().add(txtDataNascimento);
+      // Agrupar botões de rádio para que somente um possa ser selecionado
+      ButtonGroup grupoSexo = new ButtonGroup();
+      grupoSexo.add(rdbtnMasculino);
+      grupoSexo.add(rdbtnFeminino);
 
-        JLabel lblRenda = new JLabel("Renda:");
-        lblRenda.setBounds(50, 210, 150, 25);
-        frame.getContentPane().add(lblRenda);
+      // ... (Continue com outros campos de acordo com a descrição fornecida)
 
-        txtRenda = new JTextField();
-        txtRenda.setBounds(210, 210, 250, 25);
-        frame.getContentPane().add(txtRenda);
+      JLabel lblEstado = new JLabel("Estado:");
+      lblEstado.setBounds(50, 390, 150, 25);
+      frame.getContentPane().add(lblEstado);
 
-        JLabel lblLogradouro = new JLabel("Logradouro:");
-        lblLogradouro.setBounds(50, 250, 150, 25);
-        frame.getContentPane().add(lblLogradouro);
+      comboEstado = new JComboBox<>(new String[]{
+              "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
+              "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
+              "RO", "RS", "SC", "SP", "SE", "TO"
+      });
+      comboEstado.setBounds(210, 390, 60, 25);
+      frame.getContentPane().add(comboEstado);
+      
+      // JLabel lblDataNascimento = new JLabel("Data de nascimento:");
+      // lblDataNascimento.setBounds(50, 170, 150, 25);
+      // frame.getContentPane().add(lblDataNascimento);
 
-        txtLogradouro = new JTextField();
-        txtLogradouro.setBounds(210, 250, 250, 25);
-        frame.getContentPane().add(txtLogradouro);
+      // txtDataNascimento = new JTextField();
+      // txtDataNascimento.setBounds(210, 170, 250, 25);
+      // frame.getContentPane().add(txtDataNascimento);
 
-        JLabel lblNumero = new JLabel("Número:");
-        lblNumero.setBounds(50, 290, 150, 25);
-        frame.getContentPane().add(lblNumero);
+      JLabel lblRenda = new JLabel("Renda:");
+      lblRenda.setBounds(50, 210, 150, 25);
+      frame.getContentPane().add(lblRenda);
 
-        txtNumero = new JTextField();
-        txtNumero.setBounds(210, 290, 250, 25);
-        frame.getContentPane().add(txtNumero);
+      txtRenda = new JTextField();
+      txtRenda.setBounds(210, 210, 250, 25);
+      frame.getContentPane().add(txtRenda);
 
-        JLabel lblComplemento = new JLabel("Complemento:");
-        lblComplemento.setBounds(50, 330, 150, 25);
-        frame.getContentPane().add(lblComplemento);
+      JLabel lblLogradouro = new JLabel("Logradouro:");
+      lblLogradouro.setBounds(50, 250, 150, 25);
+      frame.getContentPane().add(lblLogradouro);
 
-        txtComplemento = new JTextField();
-        txtComplemento.setBounds(210, 330, 250, 25);
-        frame.getContentPane().add(txtComplemento);
+      txtLogradouro = new JTextField();
+      txtLogradouro.setBounds(210, 250, 250, 25);
+      frame.getContentPane().add(txtLogradouro);
 
-        JLabel lblCEP = new JLabel("CEP:");
-        lblCEP.setBounds(50, 370, 150, 25);
-        frame.getContentPane().add(lblCEP);
+      JLabel lblNumero = new JLabel("Número:");
+      lblNumero.setBounds(50, 290, 150, 25);
+      frame.getContentPane().add(lblNumero);
 
-        txtCEP = new JTextField();
-        txtCEP.setBounds(210, 370, 250, 25);
-        frame.getContentPane().add(txtCEP);
+      txtNumero = new JTextField();
+      txtNumero.setBounds(210, 290, 250, 25);
+      frame.getContentPane().add(txtNumero);
 
-        JLabel lblCidade = new JLabel("Cidade:");
-        lblCidade.setBounds(50, 410, 150, 25);
-        frame.getContentPane().add(lblCidade);
+      JLabel lblComplemento = new JLabel("Complemento:");
+      lblComplemento.setBounds(50, 330, 150, 25);
+      frame.getContentPane().add(lblComplemento);
 
-        txtCidade = new JTextField();
-        txtCidade.setBounds(210, 410, 250, 25);
-        frame.getContentPane().add(txtCidade);
+      txtComplemento = new JTextField();
+      txtComplemento.setBounds(210, 330, 250, 25);
+      frame.getContentPane().add(txtComplemento);
 
-        JButton btnSalvar = new JButton("Salvar");
-        btnSalvar.setBounds(210, 450, 100, 30);
-        btnSalvar.addActionListener(e -> salvarDados());
-        frame.getContentPane().add(btnSalvar);
+      // JLabel lblCEP = new JLabel("CEP:");
+      // lblCEP.setBounds(50, 370, 150, 25);
+      // frame.getContentPane().add(lblCEP);
 
-        JButton btnLimpar = new JButton("Limpar");
-        btnLimpar.setBounds(320, 450, 100, 30);
-        btnLimpar.addActionListener(e -> limparCampos());
-        frame.getContentPane().add(btnLimpar);
-        try {
-    MaskFormatter cpfMask = new MaskFormatter("###.###.###-##");
-    JFormattedTextField txtCPFFormatted = new JFormattedTextField(cpfMask);
-    txtCPFFormatted.setBounds(10, 30, 200, 25);
-    frame.add(txtCPFFormatted);
+      // txtCEP = new JTextField();
+      // txtCEP.setBounds(210, 370, 250, 25);
+      // frame.getContentPane().add(txtCEP);
 
-    MaskFormatter dateMask = new MaskFormatter("##/##/####");
-    JFormattedTextField txtDataNascimentoFormatted = new JFormattedTextField(dateMask);
-    txtDataNascimentoFormatted.setBounds(10, 80, 200, 25);
-    frame.add(txtDataNascimentoFormatted);
+      JLabel lblCidade = new JLabel("Cidade:");
+      lblCidade.setBounds(50, 410, 150, 25);
+      frame.getContentPane().add(lblCidade);
 
-    MaskFormatter cepMask = new MaskFormatter("#####-###");
-    JFormattedTextField txtCEPFormatted = new JFormattedTextField(cepMask);
-    txtCEPFormatted.setBounds(10, 130, 200, 25);
-    frame.add(txtCEPFormatted);
+      txtCidade = new JTextField();
+      txtCidade.setBounds(210, 410, 250, 25);
+      frame.getContentPane().add(txtCidade);
 
-} catch (ParseException e) {
-    e.printStackTrace();
-}
+      JButton btnSalvar = new JButton("Salvar");
+      btnSalvar.setBounds(210, 450, 100, 30);
+      btnSalvar.addActionListener(e -> salvarDados());
+      frame.getContentPane().add(btnSalvar);
+
+      JButton btnLimpar = new JButton("Limpar");
+      btnLimpar.setBounds(320, 450, 100, 30);
+      btnLimpar.addActionListener(e -> limparCampos());
+      frame.getContentPane().add(btnLimpar);
+      
+    } catch (ParseException e) {
+        e.printStackTrace();
     }
+  }
 
   private void salvarDados() {
     // Aqui você pode incluir a lógica para salvar os dados inseridos, como, por exemplo, 
