@@ -2,6 +2,7 @@ package br.gov.cesarschool.poo.bonusvendas.dao;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
@@ -29,7 +30,7 @@ public class LancamentoBonusDAO {
         }        
     }
 
-    public boolean excluir(long numeroCaixaDeBonus, LocalDateTime dataHoraLancamento) {
+    public boolean excluir(long numeroCaixaDeBonus, LocalDate dataHoraLancamento) {
         LancamentoBonus lancamentoBusca = buscar(numeroCaixaDeBonus, dataHoraLancamento);
         if (lancamentoBusca == null) {
             return false;
@@ -39,7 +40,7 @@ public class LancamentoBonusDAO {
         }        
     }
 
-    public LancamentoBonus buscar(long numeroCaixaDeBonus, LocalDateTime dataHoraLancamento) {
+    public LancamentoBonus buscar(long numeroCaixaDeBonus, LocalDate dataHoraLancamento) {
         return (LancamentoBonus) cadastro.buscar(generateUniqueId(new LancamentoBonus(numeroCaixaDeBonus, 0, dataHoraLancamento)));
     }
 
