@@ -258,13 +258,18 @@ public class TelaManutencaoVendedor {
           }
       });
     }
-
+    
     private void cadastrarVendedor() {
         // Obtém os valores dos campos da interface gráfica
         String cpf = cpfFormattedField.getText().replaceAll("[.-]", "");
 
         String nome = textFieldNome.getText();
-        String sexo = radioButtonMasculino.isSelected() ? "Masculino" : "Feminino";
+        Sexo sexo;
+        if(radioButtonMasculino.isSelected()) {
+          sexo = Sexo.MASCULINO;
+        } else {
+          sexo = Sexo.FEMININO;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataNascimento = LocalDate.parse(dataNascimentoFormattedField.getText(), formatter);
         double renda = Double.parseDouble(textFieldRenda.getText());
@@ -278,7 +283,7 @@ public class TelaManutencaoVendedor {
         // Crie uma instância de Vendedor com os valores obtidos
         Endereco endereco = new Endereco(logradouro, numero, complemento, cep, cidade, estado, "Brasil");
         // Vendedor vendedor = new Vendedor(cpf, nome, Sexo.FEMININO, dataNascimento, renda, endereco);
-        Vendedor vendedor = new Vendedor(cpf, nome, Sexo.FEMININO, dataNascimento, renda, endereco);
+        Vendedor vendedor = new Vendedor(cpf, nome, sexo, dataNascimento, renda, endereco);
 
         vendedor.setCpf(cpf);
         vendedor.setNomeCompleto(nome);
