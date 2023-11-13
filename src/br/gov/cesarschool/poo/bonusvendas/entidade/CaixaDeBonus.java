@@ -1,12 +1,16 @@
 package br.gov.cesarschool.poo.bonusvendas.entidade;
 
 import java.time.LocalDateTime;
-import java.io.Serializable;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
 
-public class CaixaDeBonus implements Serializable {
+public class CaixaDeBonus extends Registro {
     private long numero;
     private double saldo;
     private LocalDateTime dataHoraAtualizacao;
+
+    public String getIdUnico(){
+        return String.valueOf(this.numero);
+    }
 
     public CaixaDeBonus(long numero) {
         this.dataHoraAtualizacao = LocalDateTime.now();
