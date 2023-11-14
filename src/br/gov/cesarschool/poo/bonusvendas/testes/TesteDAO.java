@@ -29,7 +29,7 @@ public class TesteDAO extends TesteGeral {
 	private static final String DIR_DAOS = IND_CUR_DIR + FILE_SEP + "src" + 
 		FILE_SEP + "br" + FILE_SEP + "gov" + FILE_SEP + "cesarschool" + 
 		FILE_SEP + "poo" + FILE_SEP + "bonusvendas" + FILE_SEP + "dao" + FILE_SEP;
-	private CadastroObjetos cadastroLanc = new CadastroObjetos(LancamentoBonus.class);
+	
 	@Test
 	public void testIdVendedor() {
 		Vendedor vend = new Vendedor(CPF_VALIDO, NOME_VALIDO, 
