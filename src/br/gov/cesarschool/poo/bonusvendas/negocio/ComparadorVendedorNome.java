@@ -4,7 +4,6 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 import br.gov.cesarschool.poo.bonusvendas.util.Comparador;
 
 public class ComparadorVendedorNome implements Comparador{
-  //singleton
   private static ComparadorVendedorNome instance = null;
   public static ComparadorVendedorNome getInstancia(){
     if(instance == null){

@@ -11,19 +11,8 @@ public class LancamentoBonusDAO {
     }
 
     public boolean incluir(LancamentoBonus lancamento) {
-<<<<<<< HEAD
-        LancamentoBonus lancamentoBusca = buscar(lancamento.getNumeroCaixaDeBonus(), lancamento.getDataHoraLancamento()); 
-        if (lancamentoBusca != null) { 
-            return false;
-        } else {
-            cadastro.incluir(lancamento, generateUniqueId(lancamento));
-            return true;
-        }
-    }
-=======
         return dao.incluir(lancamento);
         }         
->>>>>>> dc9dc4d5ba3da17dcf456ebbd9b19b2f6aec2665
 
     public boolean alterar(LancamentoBonus lancamento) {
         return dao.alterar(lancamento);      
