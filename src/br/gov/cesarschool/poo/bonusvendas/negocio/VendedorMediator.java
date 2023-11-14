@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import br.gov.cesarschool.poo.bonusvendas.dao.VendedorDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
+import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 
 public class VendedorMediator {
   private static VendedorMediator instance;
@@ -104,5 +105,17 @@ public class VendedorMediator {
 
   public Vendedor buscar(String cpf) {
     return repositorioVendedor.buscar(cpf);
+  }
+
+  public Vendedor[] gerarListagemClienteOrdenadaPorNome(){
+    Vendedor[] vendedores = repositorioVendedor.buscarTodos();
+    Ordenadora.ordenar(vendedores, ComparadorVendedorNome.getInstancia());
+    return vendedores;
+  }
+
+  public Vendedor[] gerarListagemClienteOrdenadaPorRenda() {
+    Vendedor[] vendedores = repositorioVendedor.buscarTodos();
+    Ordenadora.ordenar(vendedores, ComparadorVendedorRenda.getInstancia());
+    return vendedores;
   }
 }

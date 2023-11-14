@@ -3,6 +3,10 @@ package br.gov.cesarschool.poo.bonusvendas.negocio;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
@@ -12,6 +16,7 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusDebito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 
 public class AcumuloResgateMediator {
   private static AcumuloResgateMediator instance;
@@ -91,5 +96,37 @@ public class AcumuloResgateMediator {
     } else {
       return "Caixa de bonus inexistente";
     }
+  }
+
+  public CaixaDeBonus[] listaCaixaDeBonusPorSaldoMaior(double saldoInicial) {
+    CaixaDeBonus[] caixas = repositorioCaixaBonus.buscarTodos();
+    for(int i = 0; i < caixas.length; i++){
+      if(caixas[i].getSaldo() < saldoInicial){
+        caixas[i] = null;
+      }
+    }
+    Ordenadora.ordenar(caixas, ComparadorCaixaDeBonusSaldoDec.getInstancia());
+    return caixas;
+  }
+
+  
+  public LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
+    LancamentoBonus[] todosLancamentos = repositorioLancamento.buscarTodos();
+    LancamentoBonus[] lancamentosFiltradosTemp = new LancamentoBonus[todosLancamentos.length];
+
+    int count = 0;
+    for (LancamentoBonus lancamento : todosLancamentos) {
+      if (!lancamento.getDataHoraLancamento().isBefore(d1) && 
+        !lancamento.getDataHoraLancamento().isAfter(d2)) {
+        lancamentosFiltradosTemp[count++] = lancamento;
+      }
+    }
+
+    LancamentoBonus[] lancamentosFiltrados = new LancamentoBonus[count];
+    System.arraycopy(lancamentosFiltradosTemp, 0, lancamentosFiltrados, 0, count);
+
+    Ordenadora.ordenar(lancamentosFiltrados, new ComparadorLancamentoBonusDHDec());
+
+    return lancamentosFiltrados;
   }
 }
