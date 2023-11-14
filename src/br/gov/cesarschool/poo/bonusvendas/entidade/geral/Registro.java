@@ -4,3 +4,4 @@ import java.io.Serializable;
 public abstract class Registro implements Serializable {
     public abstract String getIdUnico();
 }
+
