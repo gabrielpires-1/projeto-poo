@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
+import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusDebito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
@@ -115,8 +116,8 @@ public class AcumuloResgateMediator {
 
     int count = 0;
     for (LancamentoBonus lancamento : todosLancamentos) {
-      if (!lancamento.getDataHoraLancamento().isBefore(d1) && 
-        !lancamento.getDataHoraLancamento().isAfter(d2)) {
+      if (!lancamento.getDataHoraLancamento().toLocalDate().isBefore(d1) && 
+        !lancamento.getDataHoraLancamento().toLocalDate().isAfter(d2)) {
         lancamentosFiltradosTemp[count++] = lancamento;
       }
     }
