@@ -148,7 +148,7 @@ public class TesteRelatorios extends TesteGeral {
 		assertVendedorRenda(vendsOrdRenda);		
 		testUsoComparadoresAux(VEND_MEDIATOR_JAVA, "ComparadorVendedorRenda.getInstance()", STR_ORDENADORA);
 	}
-	
+ 
 	@Test
 	public void testRelatorioCaixaDeBonus() {
 		excluirVendedoresCaixasBonusLancamentos(); 

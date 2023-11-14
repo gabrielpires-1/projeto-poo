@@ -3,6 +3,8 @@ package br.gov.cesarschool.poo.bonusvendas.negocio;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
@@ -96,16 +98,22 @@ public class AcumuloResgateMediator {
 
   public CaixaDeBonus[] listaCaixaDeBonusPorSaldoMaior(double saldoInicial) {
     CaixaDeBonus[] caixas = repositorioCaixaBonus.buscarTodos();
-    for(int i = 0; i < caixas.length; i++){
-      if(caixas[i].getSaldo() < saldoInicial){
-        caixas[i] = null;
-      }
-    }
-    Ordenadora.ordenar(caixas, ComparadorCaixaDeBonusSaldoDec.getInstance());
-    return caixas;
-  }
+    
+    List<CaixaDeBonus> filteredCaixas = new ArrayList<>();
 
-  
+    for (CaixaDeBonus caixa : caixas) {
+        if (caixa.getSaldo() >= saldoInicial) {
+            filteredCaixas.add(caixa);
+        }
+    }
+
+    CaixaDeBonus[] result = filteredCaixas.toArray(new CaixaDeBonus[0]);
+
+    Ordenadora.ordenar(result, ComparadorCaixaDeBonusSaldoDec.getInstance());
+
+    return result;
+}
+
   public LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
     LancamentoBonus[] todosLancamentos = repositorioLancamento.buscarTodos();
     LancamentoBonus[] lancamentosFiltradosTemp = new LancamentoBonus[todosLancamentos.length];
