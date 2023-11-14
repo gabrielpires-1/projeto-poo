@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
@@ -120,17 +122,18 @@ public class AcumuloResgateMediator {
 
     int count = 0;
     for (LancamentoBonus lancamento : todosLancamentos) {
-      if (!lancamento.getDataHoraLancamento().toLocalDate().isBefore(d1) && 
-        !lancamento.getDataHoraLancamento().toLocalDate().isAfter(d2)) {
-        lancamentosFiltradosTemp[count++] = lancamento;
-      }
+        if (!lancamento.getDataHoraLancamento().toLocalDate().isBefore(d1) &&
+            !lancamento.getDataHoraLancamento().toLocalDate().isAfter(d2)) {
+            lancamentosFiltradosTemp[count++] = lancamento;
+        }
     }
 
     LancamentoBonus[] lancamentosFiltrados = new LancamentoBonus[count];
     System.arraycopy(lancamentosFiltradosTemp, 0, lancamentosFiltrados, 0, count);
 
-    Ordenadora.ordenar(lancamentosFiltrados, new ComparadorLancamentoBonusDHDec());
+    // Use Collections.sort com ComparadorLancamentoBonusDHDec
+    Collections.sort(Arrays.asList(lancamentosFiltrados), ComparadorLancamentoBonusDHDec.getInstance());
 
     return lancamentosFiltrados;
-  }
+}
 }
