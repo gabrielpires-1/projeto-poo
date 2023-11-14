@@ -5,6 +5,10 @@ import br.gov.cesarschool.poo.bonusvendas.util.Comparador;
 
 public class ComparadorCaixaDeBonusSaldoDec implements Comparador<CaixaDeBonus>{
   private static ComparadorCaixaDeBonusSaldoDec instance = null;
+
+  private ComparadorCaixaDeBonusSaldoDec() {
+  }
+  
   public static ComparadorCaixaDeBonusSaldoDec getInstance(){
     if(instance == null){
       instance = new ComparadorCaixaDeBonusSaldoDec();

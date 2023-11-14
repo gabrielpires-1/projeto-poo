@@ -5,6 +5,10 @@ import br.gov.cesarschool.poo.bonusvendas.util.Comparador;
 
 public class ComparadorVendedorNome implements Comparador<Vendedor>{
   private static ComparadorVendedorNome instance = null;
+
+  private ComparadorVendedorNome() {
+  }
+
   public static ComparadorVendedorNome getInstance(){
     if(instance == null){
       instance = new ComparadorVendedorNome();
