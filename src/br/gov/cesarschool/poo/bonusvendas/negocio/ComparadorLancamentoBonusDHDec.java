@@ -6,6 +6,9 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 
 public class ComparadorLancamentoBonusDHDec implements Comparator<LancamentoBonus>{
   private static ComparadorLancamentoBonusDHDec instance = null;
+
+  private ComparadorLancamentoBonusDHDec() {
+  }
   
   public static ComparadorLancamentoBonusDHDec getInstance(){
     if(instance == null){

@@ -127,11 +127,8 @@ public class AcumuloResgateMediator {
             lancamentosFiltradosTemp[count++] = lancamento;
         }
     }
-
     LancamentoBonus[] lancamentosFiltrados = new LancamentoBonus[count];
     System.arraycopy(lancamentosFiltradosTemp, 0, lancamentosFiltrados, 0, count);
-
-    // Use Collections.sort com ComparadorLancamentoBonusDHDec
     Collections.sort(Arrays.asList(lancamentosFiltrados), ComparadorLancamentoBonusDHDec.getInstance());
 
     return lancamentosFiltrados;
