@@ -9,7 +9,11 @@ import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 
 public class LancamentoBonusDAO {
-    private CadastroObjetos cadastro = new CadastroObjetos(LancamentoBonus.class); 
+    private DAOGenerico dao;
+
+    public LancamentoBonusDAO() {
+        this.dao = new DAOGenerico(LancamentoBonus.class);
+    }
 
     public boolean incluir(LancamentoBonus lancamento) {
         LancamentoBonus lancamentoBusca = buscar(lancamento.getNumeroCaixaDeBonus(), lancamento.getDataHoraLancamento()); 
