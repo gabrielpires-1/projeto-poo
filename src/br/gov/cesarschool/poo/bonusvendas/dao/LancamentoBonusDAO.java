@@ -2,6 +2,7 @@ package br.gov.cesarschool.poo.bonusvendas.dao;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
@@ -54,6 +55,7 @@ public class LancamentoBonusDAO {
     }
 
     private String generateUniqueId(LancamentoBonus lancamento) {
-        return lancamento.getNumeroCaixaDeBonus() + "_" + lancamento.getDataHoraLancamento();
+        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        return lancamento.getNumeroCaixaDeBonus() + lancamento.getDataHoraLancamento().format(customFormatter);
     }
 }
