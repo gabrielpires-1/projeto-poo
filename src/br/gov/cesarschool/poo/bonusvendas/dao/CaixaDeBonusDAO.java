@@ -1,49 +1,33 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
-import java.io.Serializable;
-
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
 
 public class CaixaDeBonusDAO {
-    private CadastroObjetos cadastro = new CadastroObjetos(CaixaDeBonus.class); 
+    private DAOGenerico dao; 
+
+    public CaixaDeBonusDAO() {
+        this.dao = new DAOGenerico(CaixaDeBonus.class);
+    }
      
     public boolean incluir(CaixaDeBonus caixa) {
-        CaixaDeBonus caixaBusca = buscar(caixa.getNumero()); 
-        if (caixaBusca != null) { 
-            return false;
-        } else {
-            cadastro.incluir(caixa, String.valueOf(caixa.getNumero()));
-            return true;
-        }         
+        return dao.incluir(caixa); 
     }
 
     public boolean alterar(CaixaDeBonus caixa) {
-        CaixaDeBonus caixaBusca = buscar(caixa.getNumero());
-        if (caixaBusca == null) {
-            return false;
-        } else {
-            cadastro.alterar(caixa, String.valueOf(caixa.getNumero()));
-            return true;
-        }        
+        return dao.alterar(caixa);
     }
 
     public boolean excluir(long numero) {
-        CaixaDeBonus caixaBusca = buscar(numero);
-        if (caixaBusca == null) {
-            return false;
-        } else {
-            cadastro.excluir(String.valueOf(numero));
-            return true;
-        }        
+        return dao.excluir(numero + "");
     }
 
     public CaixaDeBonus buscar(long numero) {
-        return (CaixaDeBonus) cadastro.buscar(String.valueOf(numero));
+        return (CaixaDeBonus) dao.buscar(numero + "");
     }
 
     public CaixaDeBonus[] buscarTodos() {
-        Serializable[] rets = cadastro.buscarTodos(CaixaDeBonus.class);
+        Registro[] rets = dao.buscarTodos();
         CaixaDeBonus[] caixas = new CaixaDeBonus[rets.length];
         for(int i=0; i<rets.length; i++) {
             caixas[i] = (CaixaDeBonus)rets[i];

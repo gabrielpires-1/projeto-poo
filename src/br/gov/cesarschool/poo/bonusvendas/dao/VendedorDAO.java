@@ -11,33 +11,16 @@ public class VendedorDAO {
     }
 
     public boolean incluir(Vendedor vendedor) {
-        Vendedor vendedorBusca = buscar(vendedor.getCpf()); 
-        if (vendedorBusca != null) {
-            return false;
-        } else {
-            dao.incluir(vendedor);
-            return true;
-        }      
+        return dao.incluir(vendedor);      
     }
 
     public boolean alterar(Vendedor vendedor) {
-        Vendedor vendedorBusca = buscar(vendedor.getCpf());
-        if (vendedorBusca == null) {
-            return false;
-        } else {
-            return dao.alterar(vendedor);
-        }        
+        return dao.alterar(vendedor);    
     }
 
     public boolean excluir(String cpf) {
-        Vendedor vendedorBusca = buscar(cpf);
-        if (vendedorBusca == null) {
-            return false;
-        } else {
-            dao.excluir(cpf);
-            return true;
+        return dao.excluir(cpf);
         }        
-    }
 
     public Vendedor buscar(String cpf) {
         return (Vendedor) dao.buscar(cpf);
