@@ -1,20 +1,23 @@
 package br.gov.cesarschool.poo.bonusvendas.negocio;
 
-import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
-import br.gov.cesarschool.poo.bonusvendas.util.Comparador;
+import java.util.Comparator;
 
-public class ComparadorLancamentoBonusDHDec implements Comparador{
+import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
+
+public class ComparadorLancamentoBonusDHDec implements Comparator<LancamentoBonus>{
   private static ComparadorLancamentoBonusDHDec instance = null;
-  public static ComparadorLancamentoBonusDHDec getInstancia(){
+  
+  public static ComparadorLancamentoBonusDHDec getInstance(){
     if(instance == null){
       instance = new ComparadorLancamentoBonusDHDec();
     }
     return instance;
   }
 
-  public int comparar(Object o1, Object o2) {
-    LancamentoBonus l1 = (LancamentoBonus) o1;
-    LancamentoBonus l2 = (LancamentoBonus) o2;
+  @Override
+  public int compare(LancamentoBonus arg0, LancamentoBonus arg1) {
+    LancamentoBonus l1 = (LancamentoBonus) arg0;
+    LancamentoBonus l2 = (LancamentoBonus) arg1;
     if (l1.getDataHoraLancamento().compareTo(l2.getDataHoraLancamento()) > 0) {
       return -1;
     } else if (l1.getDataHoraLancamento().compareTo(l2.getDataHoraLancamento()) < 0) {
@@ -23,4 +26,5 @@ public class ComparadorLancamentoBonusDHDec implements Comparador{
       return 0;
     }
   }
+
 }

@@ -1,5 +1,5 @@
 package br.gov.cesarschool.poo.bonusvendas.util;
 
-public interface Comparador {
-  int comparar(Object o1, Object o2);
+public interface Comparador<T> {
+  int comparar(T o1, T o2);
 } 

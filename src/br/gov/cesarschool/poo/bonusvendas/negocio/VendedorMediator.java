@@ -109,13 +109,13 @@ public class VendedorMediator {
 
   public Vendedor[] gerarListagemClienteOrdenadaPorNome(){
     Vendedor[] vendedores = repositorioVendedor.buscarTodos();
-    Ordenadora.ordenar(vendedores, ComparadorVendedorNome.getInstancia());
+    Ordenadora.ordenar(vendedores, ComparadorVendedorNome.getInstance());
     return vendedores;
   }
 
   public Vendedor[] gerarListagemClienteOrdenadaPorRenda() {
     Vendedor[] vendedores = repositorioVendedor.buscarTodos();
-    Ordenadora.ordenar(vendedores, ComparadorVendedorRenda.getInstancia());
+    Ordenadora.ordenar(vendedores, ComparadorVendedorRenda.getInstance());
     return vendedores;
   }
 }
