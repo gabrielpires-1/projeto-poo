@@ -22,7 +22,7 @@ public class LancamentoBonusDAO {
         } else {
             cadastro.incluir(lancamento, generateUniqueId(lancamento));
             return true;
-        }         
+        }
     }
 
     public boolean alterar(LancamentoBonus lancamento) {
