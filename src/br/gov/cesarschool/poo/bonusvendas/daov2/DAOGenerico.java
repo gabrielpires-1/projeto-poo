@@ -1,50 +1,60 @@
-package br.gov.cesarschool.poo.bonusvendas.dao;
+package br.gov.cesarschool.poo.bonusvendas.daov2;
 
 import java.io.Serializable;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 
 public class DAOGenerico {
+    private String nomeEntidade; 
     CadastroObjetos cadastro;
-    public DAOGenerico(Class<?> tipo) {
+    public DAOGenerico(Class<?> tipo, String nomeEntidade) {
         cadastro = new CadastroObjetos(tipo);        
+        this.nomeEntidade = nomeEntidade;
     }
 
-    public boolean incluir(Registro reg){
+    public void incluir(Registro reg) throws ExcecaoObjetoJaExistente {
         String idUnico = reg.getIdUnico();
-        Registro regBusca = buscar(idUnico);
-        if (regBusca != null) { 
-            return false;
-        } else {
+        try{
+            buscar(idUnico);
+            throw new ExcecaoObjetoJaExistente(nomeEntidade + " ja existente");
+        } catch (ExcecaoObjetoNaoExistente e) {
             cadastro.incluir(reg, idUnico);
-            return true;
         }
     }
 
-    public boolean alterar(Registro reg){
+    public void alterar(Registro reg) throws ExcecaoObjetoNaoExistente {
         String idUnico = reg.getIdUnico();
-        Registro regBusca = buscar(idUnico);
-        if (regBusca == null) { 
-            return false;
-        } else {
+        try {
+            buscar(idUnico);
             cadastro.alterar(reg, idUnico);
-            return true;
+        } catch (ExcecaoObjetoNaoExistente e) {
+            throw new ExcecaoObjetoNaoExistente(nomeEntidade + " nao existente");
         }
     }
 
-    public boolean excluir(String id){
-        Registro regBusca = buscar(id);
-        if (regBusca == null) { 
+    public boolean excluir(String id) throws ExcecaoObjetoNaoExistente {
+        try {
+            Registro regBusca = buscar(id);
+            if (regBusca == null) { 
+                return false;
+            } else {
+                cadastro.excluir(id);
+                return true;
+            }
+        } catch (ExcecaoObjetoNaoExistente e) {
             return false;
-        } else {
-            cadastro.excluir(id);
-            return true;
         }
     }
 
-    public Registro buscar(String id){
-        return (Registro) cadastro.buscar(id);
+    public Registro buscar(String id) throws ExcecaoObjetoNaoExistente {
+        if(cadastro.buscar(id) == null) {
+            throw new ExcecaoObjetoNaoExistente(nomeEntidade + " nao existente");
+        } else {
+            return (Registro) cadastro.buscar(id);
+        }
     }
 
     public Registro[] buscarTodos() {

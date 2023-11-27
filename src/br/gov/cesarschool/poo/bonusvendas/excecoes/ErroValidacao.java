@@ -1,8 +1,8 @@
 package br.gov.cesarschool.poo.bonusvendas.excecoes;
 
 public class ErroValidacao {
-  int codigo;
-  String mensagem;
+  private int codigo;
+  private String mensagem;
 
   public ErroValidacao(int codigo, String mensagem) {
     this.codigo = codigo;

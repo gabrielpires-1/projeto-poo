@@ -3,7 +3,7 @@ package br.gov.cesarschool.poo.bonusvendas.excecoes;
 public class ExcecaoObjetoNaoExistente extends Exception {
 
   public ExcecaoObjetoNaoExistente() {
-    super("Objeto não existente");
+    super("Objeto nao existente");
   }
 
   public ExcecaoObjetoNaoExistente(String mensagem) {

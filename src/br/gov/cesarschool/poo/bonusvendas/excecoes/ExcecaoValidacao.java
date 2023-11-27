@@ -1,19 +1,22 @@
 package br.gov.cesarschool.poo.bonusvendas.excecoes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExcecaoValidacao extends Exception {
-  private java.util.List<ErroValidacao> errosValidacao = new java.util.ArrayList<ErroValidacao>();
+  private List<ErroValidacao> errosValidacao = new ArrayList<ErroValidacao>();
 
   public ExcecaoValidacao(String mensagem) {
     super(mensagem);
   }
 
-  public ExcecaoValidacao(java.util.List<ErroValidacao> errosValidacao) {
+  public ExcecaoValidacao(List<ErroValidacao> errosValidacao) {
     if (errosValidacao != null) {
       this.errosValidacao = errosValidacao;
     }
   }
 
-  public java.util.List<ErroValidacao> getErrosValidacao() {
+  public List<ErroValidacao> getErrosValidacao() {
     return errosValidacao;
   }
 

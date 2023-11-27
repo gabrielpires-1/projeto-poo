@@ -1,28 +1,30 @@
-package br.gov.cesarschool.poo.bonusvendas.dao;
+package br.gov.cesarschool.poo.bonusvendas.daov2;
 
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
+import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 
 public class LancamentoBonusDAO {
     private DAOGenerico dao;
 
     public LancamentoBonusDAO() {
-        this.dao = new DAOGenerico(LancamentoBonus.class);
+        this.dao = new DAOGenerico(LancamentoBonus.class, "Lancamento");
     }
 
-    public boolean incluir(LancamentoBonus lancamento) {
-        return dao.incluir(lancamento);
-        }         
+    public void incluir(LancamentoBonus lancamento) throws ExcecaoObjetoJaExistente{
+        dao.incluir(lancamento);
+    }         
 
-    public boolean alterar(LancamentoBonus lancamento) {
-        return dao.alterar(lancamento);      
+    public void alterar(LancamentoBonus lancamento) throws ExcecaoObjetoNaoExistente{
+        dao.alterar(lancamento);      
     }
 
-    public boolean excluir(LancamentoBonus lancamento) {
-        return dao.excluir(lancamento.getIdUnico());       
+    public void excluir(LancamentoBonus lancamento) throws ExcecaoObjetoNaoExistente {
+        dao.excluir(lancamento.getIdUnico());       
     }
 
-    public LancamentoBonus buscar(String codigo) {
+    public LancamentoBonus buscar(String codigo) throws ExcecaoObjetoNaoExistente {
         return (LancamentoBonus) dao.buscar(codigo);
     }
 
