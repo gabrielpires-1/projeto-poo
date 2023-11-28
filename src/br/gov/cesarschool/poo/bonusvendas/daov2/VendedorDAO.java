@@ -12,17 +12,17 @@ public class VendedorDAO {
         this.dao = new DAOGenerico(Vendedor.class, "Vendedor");
     }
 
-    public void incluir(Vendedor vendedor) throws ExcecaoObjetoJaExistente{
-        dao.incluir(vendedor);      
+    public void incluir(Vendedor vendedor) throws ExcecaoObjetoJaExistente {
+        dao.incluir(vendedor);
     }
 
     public void alterar(Vendedor vendedor) throws ExcecaoObjetoNaoExistente {
-        dao.alterar(vendedor);    
+        dao.alterar(vendedor);
     }
 
     public void excluir(String cpf) throws ExcecaoObjetoNaoExistente {
         dao.excluir(cpf);
-    }        
+    }
 
     public Vendedor buscar(String cpf) throws ExcecaoObjetoNaoExistente {
         return (Vendedor) dao.buscar(cpf);
@@ -31,9 +31,9 @@ public class VendedorDAO {
     public Vendedor[] buscarTodos() {
         Registro[] registros = dao.buscarTodos();
         Vendedor[] vendedores = new Vendedor[registros.length];
-        for(int i=0; i<registros.length; i++) {
-            vendedores[i] = (Vendedor)registros[i];
+        for (int i = 0; i < registros.length; i++) {
+            vendedores[i] = (Vendedor) registros[i];
         }
         return vendedores;
-    } 
+    }
 }
