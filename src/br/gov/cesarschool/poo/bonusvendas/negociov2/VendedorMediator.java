@@ -11,7 +11,6 @@ import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoValidacao;
 import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorVendedorNome;
 import br.gov.cesarschool.poo.bonusvendas.negocio.ComparadorVendedorRenda;
-import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
 import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 
@@ -74,7 +73,7 @@ public class VendedorMediator {
     }
   }
 
-  public long incluir(Vendedor vendedor) throws ExcecaoObjetoJaExistente {
+  public long incluir(Vendedor vendedor) throws ExcecaoObjetoJaExistente, ExcecaoValidacao {
 
     try {
       validar(vendedor);
