@@ -27,12 +27,8 @@ public class DAOGenerico {
 
     public void alterar(Registro reg) throws ExcecaoObjetoNaoExistente {
         String idUnico = reg.getIdUnico();
-        try {
-            buscar(idUnico);
-            cadastro.alterar(reg, idUnico);
-        } catch (ExcecaoObjetoNaoExistente e) {
-            throw new ExcecaoObjetoNaoExistente(nomeEntidade + " nao existente");
-        }
+        buscar(idUnico);
+        cadastro.alterar(reg, idUnico);
     }
 
     public boolean excluir(String id) throws ExcecaoObjetoNaoExistente {
@@ -50,10 +46,11 @@ public class DAOGenerico {
     }
 
     public Registro buscar(String id) throws ExcecaoObjetoNaoExistente {
-        if(cadastro.buscar(id) == null) {
+        Registro registroBusca = (Registro) cadastro.buscar(id);
+        if(registroBusca == null) {
             throw new ExcecaoObjetoNaoExistente(nomeEntidade + " nao existente");
         } else {
-            return (Registro) cadastro.buscar(id);
+            return registroBusca;
         }
     }
 

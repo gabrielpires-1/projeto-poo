@@ -33,7 +33,7 @@ public class VendedorMediator {
   }
 
   public void validar(Vendedor vendedor) throws ExcecaoValidacao {
-    ArrayList<ErroValidacao> erros = new ArrayList<ErroValidacao>();
+    ArrayList<ErroValidacao> erros = new ArrayList<>();
     if (vendedor.getCpf() == null || vendedor.getCpf().trim().isEmpty()) {
       erros.add(new ErroValidacao(0, "CPF nao informado"));
     } else if (ValidadorCPF.ehCpfValido(vendedor.getCpf()) == false) {
@@ -55,41 +55,36 @@ public class VendedorMediator {
     }
     if (vendedor.getEndereco() == null) {
       erros.add(new ErroValidacao(7, "Endereco nao informado"));
-    } else if (vendedor.getEndereco().getLogradouro() == null
+    } else{ 
+      if (vendedor.getEndereco().getLogradouro() == null
         || vendedor.getEndereco().getLogradouro().trim().isEmpty()) {
-      erros.add(new ErroValidacao(8, "Logradouro nao informado"));
-    } else if (vendedor.getEndereco().getLogradouro().length() < 4) {
-      erros.add(new ErroValidacao(9, "Logradouro tem menos de 04 caracteres"));
-    } else if (vendedor.getEndereco().getNumero() < 0) {
-      erros.add(new ErroValidacao(10, "Numero menor que zero"));
-    } else if (vendedor.getEndereco().getCidade() == null || vendedor.getEndereco().getCidade().trim().isEmpty()) {
-      erros.add(new ErroValidacao(11, "Cidade nao informada"));
-    } else if (vendedor.getEndereco().getEstado() == null || vendedor.getEndereco().getEstado().trim().isEmpty()) {
-      erros.add(new ErroValidacao(12, "Estado nao informado"));
-    } else if (vendedor.getEndereco().getPais() == null || vendedor.getEndereco().getPais().trim().isEmpty()) {
-      erros.add(new ErroValidacao(13, "Pais nao informado"));
-    } else if (erros.size() > 0) {
+        erros.add(new ErroValidacao(8, "Logradouro nao informado"));
+      } else if (vendedor.getEndereco().getLogradouro().length() < 4) {
+        erros.add(new ErroValidacao(9, "Logradouro tem menos de 04 caracteres"));
+      } if (vendedor.getEndereco().getNumero() < 0) {
+        erros.add(new ErroValidacao(10, "Numero menor que zero"));
+      } if (vendedor.getEndereco().getCidade() == null || vendedor.getEndereco().getCidade().trim().isEmpty()) {
+        erros.add(new ErroValidacao(11, "Cidade nao informada"));
+      } if (vendedor.getEndereco().getEstado() == null || vendedor.getEndereco().getEstado().trim().isEmpty()) {
+        erros.add(new ErroValidacao(12, "Estado nao informado"));
+      } if (vendedor.getEndereco().getPais() == null || vendedor.getEndereco().getPais().trim().isEmpty()) {
+        erros.add(new ErroValidacao(13, "Pais nao informado"));
+        }
+    } 
+    if (!erros.isEmpty()) {
       throw new ExcecaoValidacao(erros);
     }
   }
 
   public long incluir(Vendedor vendedor) throws ExcecaoObjetoJaExistente, ExcecaoValidacao {
-
-    try {
       validar(vendedor);
       repositorioVendedor.incluir(vendedor);
       long num = caixaDeBonusMediator.gerarCaixaDeBonus(vendedor);
       return num;
-    } catch (ExcecaoValidacao e) {
-      throw new ExcecaoObjetoJaExistente(e.getMessage());
-    } catch (ExcecaoObjetoJaExistente e) {
-      throw new ExcecaoObjetoJaExistente(e.getMessage());
-    }
   }
 
   public void alterar(Vendedor vendedor) throws ExcecaoObjetoNaoExistente, ExcecaoValidacao {
     validar(vendedor);
-    repositorioVendedor.buscar(vendedor.getCpf());
     repositorioVendedor.alterar(vendedor);
   }
 
