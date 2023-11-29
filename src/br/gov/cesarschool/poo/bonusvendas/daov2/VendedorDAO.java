@@ -6,26 +6,26 @@ import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 
 public class VendedorDAO {
-    DAOGenerico dao;
+    private DAOGenericoTp<Vendedor> dao;
 
     public VendedorDAO() {
-        this.dao = new DAOGenerico(Vendedor.class, "Vendedor");
+        this.dao = new DAOGenericoTp<>(Vendedor.class, "Vendedor");
     }
 
     public void incluir(Vendedor vendedor) throws ExcecaoObjetoJaExistente {
-        dao.incluir(vendedor);
+        this.dao.incluir(vendedor);
     }
 
     public void alterar(Vendedor vendedor) throws ExcecaoObjetoNaoExistente {
-        dao.alterar(vendedor);
+        this.dao.alterar(vendedor);
     }
 
     public void excluir(String cpf) throws ExcecaoObjetoNaoExistente {
-        dao.excluir(cpf);
+        this.dao.excluir(cpf);
     }
 
     public Vendedor buscar(String cpf) throws ExcecaoObjetoNaoExistente {
-        return (Vendedor) dao.buscar(cpf);
+        return this.dao.buscar(cpf);
     }
 
     public Vendedor[] buscarTodos() {
@@ -36,4 +36,6 @@ public class VendedorDAO {
         }
         return vendedores;
     }
+
 }
+

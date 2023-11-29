@@ -6,10 +6,10 @@ import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 
 public class CaixaDeBonusDAO {
-    private DAOGenerico dao; 
+    private DAOGenericoTp<CaixaDeBonus> dao; 
 
     public CaixaDeBonusDAO() {
-        this.dao = new DAOGenerico(CaixaDeBonus.class, "Caixa");
+        this.dao = new DAOGenericoTp<>(CaixaDeBonus.class, "Caixa");
     }
      
     public void incluir(CaixaDeBonus caixa) throws ExcecaoObjetoJaExistente{

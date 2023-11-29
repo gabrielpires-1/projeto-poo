@@ -6,18 +6,18 @@ import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 
 public class LancamentoBonusDAO {
-    private DAOGenerico dao;
+    private DAOGenericoTp<LancamentoBonus> dao;
 
     public LancamentoBonusDAO() {
-        this.dao = new DAOGenerico(LancamentoBonus.class, "Lancamento");
+        this.dao = new DAOGenericoTp<>(LancamentoBonus.class, "Lancamento");
     }
 
-    public void incluir(LancamentoBonus lancamento) throws ExcecaoObjetoJaExistente{
+    public void incluir(LancamentoBonus lancamento) throws ExcecaoObjetoJaExistente {
         dao.incluir(lancamento);
-    }         
+    }
 
-    public void alterar(LancamentoBonus lancamento) throws ExcecaoObjetoNaoExistente{
-        dao.alterar(lancamento);      
+    public void alterar(LancamentoBonus lancamento) throws ExcecaoObjetoNaoExistente {
+        dao.alterar(lancamento);
     }
 
     public void excluir(LancamentoBonus lancamento) throws ExcecaoObjetoNaoExistente {
